@@ -16,8 +16,14 @@ const geistMono = Geist_Mono({
 
 
 export const metadata: Metadata = {
-  title: "Resonance",
+  title: {
+    default: "Resonance",
+    template: "%s | Resonance",
+  },
   description: "AI Voice Changer & Soundboard",
+  icons: {
+    icon: "/logo.svg"
+  }
 };
 
 export default function RootLayout({
