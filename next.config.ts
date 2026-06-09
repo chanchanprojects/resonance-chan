@@ -2,7 +2,10 @@ import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  devIndicators: false
+  devIndicators: false,
+  experimental: {
+    proxyClientMaxBodySize: "20mb"
+  }
 };
 
 export default withSentryConfig(nextConfig, {
