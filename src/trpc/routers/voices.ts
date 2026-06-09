@@ -10,7 +10,7 @@ export const voicesRouter = createTRPCRouter({
       z.object({
         query: z.string().trim().optional()
       })
-        .optional()
+      .optional()
     )
     .query(async ({ ctx, input }) => {
       const searchFilter = input?.query
@@ -23,7 +23,7 @@ export const voicesRouter = createTRPCRouter({
               }
             },
             {
-              desciption: {
+              description: {
                 contains: input.query,
                 mode: "insensitive" as const
               }
