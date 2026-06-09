@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs"
 import { z } from "zod"
 import { createTRPCRouter, orgProcedure } from "../init";
 import { prisma } from "@/lib/db";
@@ -107,6 +108,12 @@ export const generationRouter = createTRPCRouter({
         parseAs: "arrayBuffer"
       })
 
+      Sentry.logger.info("Generation started", {
+        orgId: ctx.orgId,
+        voiceId: input.voiceId,
+        textLength: input.text.length
+      })
+
       if (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -159,6 +166,11 @@ export const generationRouter = createTRPCRouter({
           }
         })
 
+        Sentry.logger.info("Audio generated", {
+          orgId: ctx.orgId,
+          generationId: generation.id
+        })
+
       } catch {
         if (generationId) {
           await prisma.generation
@@ -169,6 +181,7 @@ export const generationRouter = createTRPCRouter({
             })
             .catch(() => { })
         }
+
 
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
